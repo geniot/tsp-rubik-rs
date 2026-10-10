@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Rubik's Cube</title>
+    <link href="favicon.ico" rel="shortcut icon">
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden; /* Prevents scrollbars */
+            width: 100%;
+            height: 100%;
+        }
+
+        canvas {
+            display: block; /* Removes the small default gap at the bottom */
+        }
+    </style>
+</head>
+<body>
+
+<canvas id="canvas" width="800" height="600"></canvas>
+
+<script>
+    var Module = {
+        canvas: function () {
+            return document.querySelector("#canvas");
+        }()
+    };
+</script>
+
+<script src=tsp-rubik-rs.js async></script>
+</body>
+</html>

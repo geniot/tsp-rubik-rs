@@ -1,13 +1,7 @@
 #!/bin/bash
 
 pkill -f hwt
-export LD_LIBRARY_PATH=/mnt/SDCARD/Apps/RubikRS:$LD_LIBRARY_PATH
-
-# $# contains the number of parameters
-if [ "$#" -gt 0 ]; then
- /mnt/SDCARD/Apps/RubikRS/tsp-rubik-rs "$@"
-else
-  progdir=$(dirname "$0")
-  cd $progdir
-  ./tsp-rubik-rs
-fi
+# https://stackoverflow.com/a/5265862/488635
+prog_dir=$(cd "$(dirname "$1")" && pwd -P)/$(basename "$1")
+export LD_LIBRARY_PATH=$prog_dir:$LD_LIBRARY_PATH
+cd "$prog_dir" && ./tsp-rubik-rs

@@ -34,6 +34,20 @@ deploy:
 zip:
 	cp res/* dist && cd dist && zip ${PROGRAM_NAME}.zip config.json icon.png launch.sh ${PROGRAM_NAME}
 
+
+export PATH := /opt/emsdk:$(PATH)
+export PATH := /opt/emsdk/upstream/emscripten:$(PATH)
+export EMSDK := /opt/emsdk
+export EMSDK_NODE := /opt/emsdk/node/22.16.0_64bit/bin/node
+# sudo apt-get purge --auto-remove emscripten
+# git clone https://github.com/emscripten-core/emsdk.git
+# source /opt/emsdk/emsdk_env.sh
 wasm:
-	go mod tidy -modfile go.wasm.mod
-	GOOS=js GOARCH=wasm go build -modfile go.wasm.mod -tags="wasm" -o ./docs/main.wasm tsp-rubik/src tsp-rubik/src
+	cargo clean --target-dir target/wasm32-unknown-emscripten
+	/opt/emsdk/emsdk install 6.0.0
+	/opt/emsdk/emsdk activate 6.0.0
+	EMCC_CFLAGS="-v -O3 -sUSE_GLFW=3 -sASSERTIONS=1 -sWASM=1 -sASYNCIFY -sGL_ENABLE_GET_PROC_ADDRESS=1" \
+	BINDGEN_EXTRA_CLANG_ARGS="--sysroot=/opt/emsdk/upstream/emscripten/cache/sysroot" \
+	cargo build --target wasm32-unknown-emscripten
+	cp target/wasm32-unknown-emscripten/debug/tsp-rubik-rs.js docs
+	cp target/wasm32-unknown-emscripten/debug/tsp_rubik_rs.wasm docs
