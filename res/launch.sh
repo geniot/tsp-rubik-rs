@@ -3,6 +3,7 @@
 pkill -f hwt
 export LD_LIBRARY_PATH=/mnt/SDCARD/Apps/RubikRS:$LD_LIBRARY_PATH
 
+# $# contains the number of parameters
 if [ "$#" -gt 0 ]; then
  /mnt/SDCARD/Apps/RubikRS/tsp-rubik-rs "$@"
 else
