@@ -1,0 +1,6 @@
+{
+  "label":    "RubikRS",
+  "icon":     "icon.png",
+  "launch":   "launch.sh",
+  "description":      "Rubik's Cube"
+}
